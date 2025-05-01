@@ -1,0 +1,241 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ADMIN</title>
+
+	<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/favicon.png' %}" />
+
+	
+	<link rel="stylesheet" href="{% static 'assets/css/assets.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/typography.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/shortcodes/shortcodes.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/dashboard.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/color/color-1.css' %}" class="skin">
+</head>
+<body class="ttr-opened-sidebar ttr-pinned-sidebar">
+
+
+	<header class="ttr-header">
+		<div class="ttr-header-wrapper">
+
+			<div class="ttr-toggle-sidebar ttr-material-button">
+				<i class="ti-close ttr-open-icon"></i>
+				<i class="ti-menu ttr-close-icon"></i>
+			</div>
+
+			<div class="ttr-logo-box">
+				<div>
+					<a href="#" class="ttr-logo">
+						<img class="ttr-logo-desktop" alt="" src="https://www.spu.ac.th/fac/informatics/wp-content/uploads/sites/10/2023/03/2016102611230037Mg000.png" width="160" height="27">
+					</a>
+				</div>
+			</div>
+			
+			</div>
+			<div class="ttr-header-right ttr-with-seperator">
+				<ul class="ttr-header-navigation">
+						
+					<li>
+						<a href="#" class="ttr-material-button ttr-submenu-toggle"><span class="ttr-user-avatar"><img
+									alt="" src="{% static 'assets/images/testimonials/pic3.jpg' %}" width="32" height="32"></span>
+						</a>
+						<div class="ttr-header-submenu">
+							<ul>
+								<li><a href="{% url 'index' %}">Logout</a></li>
+							</ul>
+						</div>
+					</li>
+					
+
+			</div>
+			<div class="ttr-search-bar">
+				<form class="ttr-search-form">
+					<div class="ttr-search-input-wrapper">
+						<input type="text" name="qq" placeholder="search something..." class="ttr-search-input">
+						<button type="submit" name="search" class="ttr-search-submit"><i
+								class="ti-arrow-right"></i></button>
+					</div>
+					<span class="ttr-search-close ttr-search-toggle">
+						<i class="ti-close"></i>
+					</span>
+				</form>
+			</div>
+
+		</div>
+	</header>
+
+
+	<div class="ttr-sidebar">
+		<div class="ttr-sidebar-wrapper content-scroll">
+			<div class="ttr-sidebar-logo">
+				<a href="#"><img alt="" src="https://www.spu.ac.th/fac/informatics/wp-content/uploads/sites/10/2023/03/2016102611230037Mg000.png" width="122" height="27"></a>
+
+				<div class="ttr-sidebar-toggle-button">
+					<i class="ti-arrow-left"></i>
+				</div>
+			</div>
+			<nav class="ttr-sidebar-navi">
+				<ul>
+					<li>
+						<a href="#" class="ttr-material-button">
+							<span class="ttr-icon"><i class="ti-home"></i></span>
+							<span class="ttr-label">Dashborad</span>
+						</a>
+					</li>
+	
+					<li>
+						<a href="#" class="ttr-material-button">
+							<span class="ttr-icon"><i class="ti-user"></i></span>
+							<span class="ttr-label">ระบบ</span>
+							<span class="ttr-arrow-icon"><i class="fa fa-angle-down"></i></span>
+						</a>
+						<ul>
+							<li>
+								<a href="{% url 'register' %}" class="ttr-material-button"><span class="ttr-label">นักศึกษา</span></a>
+							</li>
+							<li>
+								<a href="{% url 'regis' %}" class="ttr-material-button"><span class="ttr-label">อาจารย์</span></a>
+							</li>
+							<li>
+								<a href="{% url 'semester' %}" class="ttr-material-button"><span class="ttr-label">ระบบลงทะเบียนรายวิชา</span></a>
+							</li>
+							<li>
+								<a href="{% url 'admin_approve_requests' %}" class="ttr-material-button"><span class="ttr-label">อนุมัติคำร้อง</span></a>
+							</li>
+							<li>
+								<a href="{% url 'all_requests_status' %}" class="ttr-material-button"><span class="ttr-label">เช็คสถานะคำร้อง</span></a>
+							</li>
+						</ul>
+					</li>
+					<li class="ttr-seperate"></li>
+				</ul>
+				<!-- sidebar menu end -->
+			</nav>
+			<!-- sidebar menu end -->
+		</div>
+	</div>
+	<!-- Left sidebar menu end -->
+
+	<!--Main container start -->
+	<main class="ttr-wrapper">
+		<div class="container-fluid">
+			<div class="db-breadcrumb">
+				<h4 class="breadcrumb-title">Dashboard</h4>
+				<ul class="db-breadcrumb-list">
+					<li><a href="#"><i class="fa fa-home"></i>Home</a></li>
+					<li>Dashboard</li>
+				</ul>
+			</div>
+			<!-- Card -->
+			<div class="row">
+				<div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
+					<div class="widget-card widget-bg4">
+						<div class="wc-item">
+							<h4 class="wc-title">อาจารย์ทั้งหมด</h4>
+							<span class="wc-des">Teacher all faculty members</span>
+							<span class="wc-stats counter">{{ teacher_count }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
+					<div class="widget-card widget-bg4">
+						<div class="wc-item">
+							<h4 class="wc-title">นักศึกษาทั้งหมด</h4>
+							<span class="wc-des">Student all faculty members</span>
+							<span class="wc-stats counter">{{ student_count }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<!-- รายการอาจารย์ -->
+				<div class="col-lg-6 m-b30">
+					<div class="widget-box">
+						<div class="wc-title">
+							<h4>Teacher (อาจารย์)</h4>
+						</div>
+						<div class="widget-inner">
+							<div class="new-user-list">
+								<ul>
+									{% for teacher in teachers %}
+									<li>
+										<span class="new-users-pic">
+											{% if teacher.profile_picture %}
+												<img src="{{ teacher.profile_picture.url }}" alt="" />
+											{% else %}
+												<img src="{% static 'assets/images/testimonials/pic1.jpg' %}" alt="default" />
+											{% endif %}
+										</span>
+										<span class="new-users-text">
+											<a href="{% url 'profileteacher' teacher.pk %}" class="new-users-name">{{ teacher.first_name }} {{ teacher.last_name }}</a>
+											<span class="new-users-info">รหัสพนักงาน: {{ teacher.student_id }}</span>
+										</span>
+									</li>
+									{% empty %}
+									<li><span class="text-muted">ไม่มีข้อมูลอาจารย์</span></li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+				<!-- รายการนักศึกษา -->
+				<div class="col-lg-6 m-b30">
+					<div class="widget-box">
+						<div class="wc-title">
+							<h4>Student (นักศึกษา)</h4>
+						</div>
+						<div class="widget-inner">
+							<div class="new-user-list">
+								<ul>
+									{% for student in students %}
+									<li>
+										<span class="new-users-pic">
+											{% if student.profile_picture %}
+												<img src="{{ student.profile_picture.url }}" alt="" />
+											{% else %}
+												<img src="{% static 'assets/images/testimonials/pic1.jpg' %}" alt="default" />
+											{% endif %}
+										</span>
+										<span class="new-users-text">
+											<a href="{% url 'studentprofile' student.pk %}" class="new-users-name">{{ student.first_name }} {{ student.last_name }}</a>
+											<span class="new-users-info">รหัสนักศึกษา: {{ student.student_id }}</span>
+										</span>
+									</li>
+									{% empty %}
+									<li><span class="text-muted">ไม่มีข้อมูลนักศึกษา</span></li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</main>
+	<div class="ttr-overlay"></div>
+
+	<!-- External JavaScripts -->
+	<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+	<script src="{% static 'assets/vendors/bootstrap/js/popper.min.js' %}"></script>
+	<script src="{% static 'assets/vendors/bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'assets/vendors/bootstrap-select/bootstrap-select.min.js' %}"></script>
+	<script src="{% static 'assets/vendors/counter/waypoints-min.js' %}"></script>
+	<script src="{% static 'assets/vendors/counter/counterup.min.js' %}"></script>
+	<script src="{% static 'assets/vendors/imagesloaded/imagesloaded.js' %}"></script>
+	<script src="{% static 'assets/vendors/masonry/masonry.js' %}"></script>
+	<script src="{% static 'assets/vendors/masonry/filter.js' %}"></script>
+	<script src="{% static 'assets/vendors/owl-carousel/owl.carousel.js' %}"></script>
+	<script src="{% static 'assets/vendors/scroll/scrollbar.min.js' %}"></script>
+	<script src="{% static 'assets/js/functions.js' %}"></script>
+	<script src="{% static 'assets/js/admin.js' %}"></script>
+</body>
+
+</html>

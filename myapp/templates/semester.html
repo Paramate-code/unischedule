@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Regis System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Prompt', sans-serif;
+        }
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .header-title {
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        h4 {
+            font-weight: 600;
+        }
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .btn-lg-custom {
+            font-size: 1.2rem;
+        }
+        .row-custom {
+            display: flex;
+            justify-content: space-between;
+        }
+        .col-custom {
+            flex: 0 48%; /* Adjust width for each column */
+        }
+        .alert {
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #0d6efd;
+            color: white;
+            font-weight: bold;
+            border-radius: 1rem 1rem 0 0;
+        }
+        .card-body {
+            background-color: #ffffff;
+        }
+        /* Styling for the alert boxes */
+        .alert {
+            background-color: #f8f9fa;
+            color: #212529;
+            border: 1px solid #d6d8db;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+        .alert-success {
+            border-left: 5px solid #ff1100;
+        }
+        .alert-danger {
+            border-left: 5px solid #dc3545;
+        }
+        .alert-info {
+            border-left: 5px solid #17a2b8;
+        }
+        .alert-warning {
+            border-left: 5px solid #ffc107;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center header-title mb-5">ระบบจัดการเทอมและวิชาเรียน</h2>
+
+    {% if messages %}
+    <div class="mb-4">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} shadow-sm rounded-3">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row row-custom">
+        <!-- Left: Semesters + Courses -->
+        <div class="col-custom">
+            <div class="card p-4 mb-4">
+                <h4 class="mb-3">เทอมทั้งหมด</h4>
+                {% for semester in semesters %}
+                <div class="border rounded p-3 mb-3 bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <strong>{{ semester.name }} (ปี {{ semester.academic_year }})</strong>
+                        <a href="{% url 'deletesystem' semester.pk %}" class="btn btn-outline-danger btn-sm">
+                            <i class="fas fa-trash"></i> ลบ
+                        </a>
+                    </div>
+                    <form method="post" action="{% url 'toggle_registration' semester.id %}" class="mt-2">
+                        {% csrf_token %}
+                        {% if semester.is_registration_open %}
+                        <button type="submit" class="btn btn-danger btn-sm w-100 btn-icon">
+                            🔒 ปิดระบบลงทะเบียน
+                        </button>
+                        {% else %}
+                        <button type="submit" class="btn btn-success btn-sm w-100 btn-icon">
+                            🔓 เปิดระบบลงทะเบียน
+                        </button>
+                        {% endif %}
+                    </form>
+                </div>
+                {% empty %}
+                <p class="text-muted">ยังไม่มีข้อมูลเทอม</p>
+                {% endfor %}
+            </div>
+
+            <div class="card p-4">
+                <h4 class="mb-3">รายการวิชา</h4>
+                <ul class="list-group list-group-flush">
+                    {% for course in courses %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div>
+                            <strong>{{ course.name }}</strong><br>
+                            <small class="text-muted">รหัส: {{ course.code }} | เทอม: {{ course.semester.name }}</small>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item text-muted">ยังไม่มีวิชา</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right: Add semester & course -->
+        <div class="col-custom">
+            <div class="card p-4 mb-4">
+                <h4 class="mb-3 text-center text-primary">เพิ่มเทอม</h4>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ semester_form.as_p }}
+                    <button type="submit" name="add_semester" class="btn btn-primary w-100 btn-icon mt-2 btn-lg-custom">
+                        <i class="fas fa-calendar-plus"></i> ➕ เพิ่มเทอม
+                    </button>
+                </form>
+            </div>
+
+            <div class="card p-4 mb-4">
+                <h4 class="mb-3 text-center text-primary">เพิ่มวิชา</h4>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ course_form.as_p }}
+                    </div>
+                    <button type="submit" name="add_course" class="btn btn-success w-100 btn-lg mt-3 btn-lg-custom">
+                        <i class="fas fa-plus-circle"></i> ➕ เพิ่มวิชา
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FontAwesome for Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Back to Main Page Button -->
+<div class="mb-4 d-flex justify-content-center">
+    <a href="{% url 'admindashboard' %}" class="btn btn-secondary btn-lg">
+        <i class="fas fa-home"></i> กลับหน้าหลัก
+    </a>
+</div>
+</body>
+</html>

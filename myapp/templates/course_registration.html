@@ -1,0 +1,50 @@
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container my-5">
+  <form method="post">
+    {% csrf_token %}
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">เลือกวิชาที่ต้องการลงทะเบียน</h4>
+      </div>
+      <div class="card-body">
+        {% if sections %}
+          <div class="list-group">
+            {% for section in sections %}
+              <label class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="form-check">
+               
+                  <input class="form-check-input me-2" 
+                         type="radio" 
+                         name="section_id" 
+                         id="section{{ section.id }}" 
+                         value="{{ section.id }}" 
+                         {% if request.user in section.students.all %} disabled {% endif %}
+                         required>
+                  <label class="form-check-label" for="section{{ section.id }}">
+                    <strong>{{ section.course.name }}</strong><br>
+                    วัน: {{ section.get_day_display }} เวลา: {{ section.time_slot }}<br>
+                    ผู้สอน: {{ section.teacher.full_name }}<br>
+                    {% if request.user in section.students.all %}
+                      <span class="badge bg-success">คุณลงทะเบียนแล้ว</span>
+                    {% endif %}
+                  </label>
+                </div>
+              </label>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-muted">ยังไม่มีรายวิชาให้ลงทะเบียน</p>
+        {% endif %}
+      </div>
+      <div class="card-footer text-end">
+        <button type="submit" class="btn btn-success">
+          <i class="bi bi-check-circle me-1"></i> ลงทะเบียน
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

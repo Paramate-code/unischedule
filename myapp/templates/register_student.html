@@ -1,0 +1,112 @@
+{% extends "basereg.html" %}
+{% load widget_tweaks %}
+
+{% block title %}สมัครสมาชิกนักศึกษา{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-success text-white py-3 text-center rounded-top-4">
+                    <h4 class="mb-0"><i class="fas fa-user-plus me-2"></i>สมัครสมาชิกนักศึกษา</h4>
+                </div>
+                <div class="card-body px-5 py-4 bg-light rounded-bottom-4">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">ชื่อ</label>
+                                {{ form.first_name|add_class:"form-control" }}
+                                {% if form.first_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.first_name.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">นามสกุล</label>
+                                {{ form.last_name|add_class:"form-control" }}
+                                {% if form.last_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.last_name.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">เพศ</label>
+                                {{ form.gender|add_class:"form-select" }}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">วันเกิด</label>
+                                {{ form.birth_date|add_class:"form-control" }}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">อายุ</label>
+                                <input type="text" class="form-control bg-white" id="age_display" readonly>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">ที่อยู่</label>
+                                {{ form.address|add_class:"form-control" }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">วุฒิการศึกษา</label>
+                                {{ form.education_level|add_class:"form-select" }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">เกรดเฉลี่ยเทอมล่าสุด</label>
+                                {{ form.gpa|add_class:"form-control" }}
+                                {% if form.gpa.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.gpa.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">สาขา</label>
+                                {{ form.department|add_class:"form-select" }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">เลขบัตรประชาชน</label>
+                                {{ form.id_card_number|add_class:"form-control" }}
+                                {% if form.id_card_number.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.id_card_number.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-center">
+                            <button type="submit" class="btn btn-success btn-lg px-5 py-2 rounded-pill">
+                                <i class="fas fa-paper-plane me-2"></i>สมัครสมาชิก
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // คำนวณอายุแบบเรียลไทม์
+    document.getElementById('id_birth_date').addEventListener('change', function () {
+        const birthDate = new Date(this.value);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        document.getElementById('age_display').value = age + ' ปี';
+    });
+</script>
+{% endblock %}

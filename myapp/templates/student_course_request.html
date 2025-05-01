@@ -1,0 +1,103 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+    .card-header-gradient {
+        background: linear-gradient(135deg, #5f2c82, #49a09d);
+        color: white;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #007bff, #00c6ff);
+        border: none;
+    }
+    .btn-secondary {
+        background: linear-gradient(135deg, #6c757d, #adb5bd);
+        border: none;
+    }
+    .badge.bg-success {
+        background-color: #28a745 !important;
+    }
+    .badge.bg-warning {
+        background-color: #ffc107 !important;
+        color: #212529 !important;
+    }
+    .badge.bg-danger {
+        background-color: #dc3545 !important;
+    }
+</style>
+
+<div class="container my-5">
+    <!-- Card: ยื่นคำร้อง -->
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header card-header-gradient">
+            <h3 class="mb-0"><i class="bi bi-pencil-square me-2"></i>ยื่นคำร้องลงทะเบียนวิชา</h3>
+        </div>
+        <div class="card-body p-4">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="course_id" class="form-label fw-semibold">เลือกวิชาที่ต้องการลงทะเบียน:</label>
+                    <select name="course_id" id="course_id" class="form-select" required>
+                        <option value="" disabled selected>-- กรุณาเลือกวิชา --</option>
+                        {% for course in courses %}
+                            <option value="{{ course.id }}">{{ course.code }} - {{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary px-4 py-2">
+                    <i class="bi bi-send-fill me-1"></i> ส่งคำร้อง
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Card: รายการคำร้อง -->
+    <div class="card mt-5 shadow-lg border-0 rounded-4">
+        <div class="card-header card-header-gradient">
+            <h4 class="mb-0"><i class="bi bi-list-check me-2"></i>รายการคำร้องของคุณ</h4>
+        </div>
+        <div class="card-body p-4">
+            {% if requests %}
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-center">ชื่อวิชา</th>
+                                <th class="text-center">สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in requests %}
+                            <tr>
+                                <td>{{ request.course.name }}</td>
+                                <td class="text-center">
+                                    {% if request.status == "approved" %}
+                                        <span class="badge bg-success px-3 py-2">อนุมัติแล้ว</span>
+                                    {% elif request.status == "pending" %}
+                                        <span class="badge bg-warning px-3 py-2">รอดำเนินการ</span>
+                                    {% elif request.status == "rejected" %}
+                                        <span class="badge bg-danger px-3 py-2">ไม่อนุมัติ</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary px-3 py-2">{{ request.status }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted">ยังไม่มีคำร้อง</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- ปุ่มกลับ -->
+    <div class="mt-4 text-center">
+        <a href="{% url 'admindashboard' %}" class="btn btn-secondary px-4 py-2">
+            <i class="bi bi-arrow-left-circle me-2"></i>กลับหน้าหลัก
+        </a>
+    </div>
+</div>

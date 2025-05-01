@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Portal | LOGIN </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{% static '/images/icons/favicon.ico' %}"/>
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static '/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+  <link rel="stylesheet" href="{% static '/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+  <link rel="stylesheet" href="{% static '/vendor/animate/animate.css' %}">
+  <link rel="stylesheet" href="{% static '/vendor/animsition/css/animsition.min.css' %}">
+  <link rel="stylesheet" href="{% static '/vendor/select2/select2.min.css' %}">
+  <link rel="stylesheet" href="{% static '/vendor/daterangepicker/daterangepicker.css' %}">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{% static '/css/util.css' %}">
+  <link rel="stylesheet" href="{% static '/css/main.css' %}">
+
+  <style>
+    .login100-form-title {
+      background: linear-gradient(135deg, #1d3557, #457b9d);
+      padding: 40px 15px;
+      border-radius: 10px 10px 0 0;
+      color: white;
+      text-align: center;
+    }
+
+    .wrap-input100 {
+      position: relative;
+    }
+
+    .wrap-input100 i {
+      position: absolute;
+      top: 12px;
+      left: 15px;
+      color: #aaa;
+    }
+
+    .wrap-input100 input {
+      padding-left: 40px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border-radius: 6px;
+    }
+
+    .login100-form-btn {
+      background: linear-gradient(135deg, #00b894, #00cec9);
+      border: none;
+      transition: 0.3s ease;
+    }
+
+    .login100-form-btn:hover {
+      background: linear-gradient(135deg, #00cec9, #00b894);
+    }
+
+    .container-login100 {
+      background: #f5f6fa;
+      padding: 40px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100 shadow-lg rounded-3 overflow-hidden">
+
+      <!-- Header -->
+      <div class="login100-form-title">
+        <span class="login100-form-title-1">เข้าสู่ระบบ  </span>
+      </div>
+
+      <!-- Form -->
+      <form class="login100-form validate-form p-4" method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <!-- Student ID -->
+        <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+          <i class="fa fa-user"></i>
+          <span class="label-input100">รหัสนักศึกษา</span>
+          <input class="input100" type="text" name="student_id" placeholder="กรุณาใส่รหัสประจำตัว" required>
+          <span class="focus-input100"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+          <i class="fa fa-lock"></i>
+          <span class="label-input100">รหัสผ่าน</span>
+          <input class="input100" type="password" name="password" placeholder="เลขบัตรประชาชน 13 หลัก" required>
+          <span class="focus-input100"></span>
+        </div>
+
+        <!-- Submit -->
+        <div class="container-login100-form-btn mt-4">
+          <button class="login100-form-btn">เข้าสู่ระบบ</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="{% static '/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static '/vendor/animsition/js/animsition.min.js' %}"></script>
+<script src="{% static '/vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static '/vendor/select2/select2.min.js' %}"></script>
+<script src="{% static '/vendor/daterangepicker/moment.min.js' %}"></script>
+<script src="{% static '/vendor/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static '/vendor/countdowntime/countdowntime.js' %}"></script>
+<script src="{% static '/js/main.js' %}"></script>
+
+</body>
+</html>
