@@ -27,8 +27,15 @@ python manage.py runserver
 ![image](https://github.com/user-attachments/assets/55bcd07b-9b92-479f-a374-d2bf75deda98)
 ![image](https://github.com/user-attachments/assets/dbf6a858-fda6-4040-9fdc-003e24a3fa9d)
 
-วิดีโอเว็บไซต์
-![Watch the video]([https://youtu.be/KDQ1o1Nxqc8](https://youtu.be/33IEHsRxOLs))
+
+## 🎥 วิดีโอตัวอย่างการทำงานของระบบ
+
+[ชมวิดีโอตัวอย่างการทำงานของระบบบน YouTube](https://youtu.be/33IEHsRxOLs)
+
+หรือคลิกภาพด้านล่าง:
+
+[![ดูวิดีโอบน YouTube](https://img.youtube.com/vi/33IEHsRxOLs/0.jpg)](https://youtu.be/33IEHsRxOLs)
+
 
 infographic
 
